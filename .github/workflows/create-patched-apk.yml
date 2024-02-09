@@ -1,0 +1,18 @@
+name: build patched apps
+on: [push]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        solution-name: [hitObstacle, invincible]
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: mon231/apkpatcher@master
+        with:
+          original-apk: 'com.colorswitch.switch2.apk'
+          output-apk: '${{ matrix.solution-name }}.apk'
+          frida-script: '${{ matrix.solution-name }}.js'
+          artifact-name: '${{ matrix.solution-name }}'

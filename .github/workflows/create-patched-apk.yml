@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: mon231/apkpatcher@master
         with:
-          original-apk: 'com.colorswitch.switch2.apk'
+          original-apk: 'original.apk'
           output-apk: '${{ matrix.solution-name }}.apk'
           frida-script: '${{ matrix.solution-name }}.js'
           artifact-name: '${{ matrix.solution-name }}'

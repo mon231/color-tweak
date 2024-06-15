@@ -1,0 +1,22 @@
+name: build patched app - using typescript
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
+
+      - name: build patch script
+        run: npm install
+
+      - uses: mon231/apkpatcher@master
+        with:
+          original-apk: 'original.apk'
+          output-apk: 'patched.apk'
+          frida-script: 'patch.frida'
+          artifact-name: 'ts-patched-apk'

@@ -56,7 +56,16 @@ Pathcing the method `isInvincible` to run it's logic then change it's return-val
 Helped me always win the game and pass through obstacles without any problem 🥰 <br />
 Complete source for this solution can be found at [`invincible.js`](./invincible.js)
 
-*NOTE* that the these patches could be inlined to the native-lib and patched using `IDA` only. <br />
+```json
+{
+    "Address": 11726328,
+    "Name": "ColorBall$$isInvincible",
+    "Signature": "bool ColorBall__isInvincible (ColorBall_o* __this, const MethodInfo* method);",
+    "TypeSignature": "iii"
+}
+```
+
+*NOTE* that the these patches could be inlined to the native-lib and patched using `IDA` only (no frida / runtime libs and logic). <br />
 For example, the last part of the `isInvincible` method implementation: <br />
 ![IsInvincibleImplementation](./static/IsInvinciblePartialImplementation.png) <br />
 Could be patched to always return `true` (1) using opcode-level patch of the app.
@@ -85,6 +94,16 @@ It would be also interesting to utilize `hitKill` method, `hitObstacle` or `Fail
 We also could use `frida` to trigger calls to `applyEasterEggs`/`applyBonusStars` and other methods. <br />
 We can patch the constructor of `GameControllerColorSwitch_Fields` to change `easterEggRate`/`bonusStarRate`, <br />
 To create new colors/balls of our own, and any other EDUCATIONAL PURPOSE ONLY research we'd like to develop!
+
+## TypeScript (and frida-il2cpp-bridge)
+
+After this project, I discovered the [frida-il2cpp-bridge](https://www.npmjs.com/package/frida-il2cpp-bridge) npm package, <br />
+That allows you use global-metadata in runtime, thus not require knowing RVA / signatures of methods. <br />
+Using this tool, I've re-implemented the `ColorBall.isInvincible` hook using symbol-names and not RVA! <br />
+One of the many advantages, is that in addition to the readability, we do not rely on phone's architecture! <br />
+This implementation can be found at [`index.ts`](./index.ts), and has it's own github-action workflow-file. <br />
+I really like this method and the package, as it make patching simple, generic and extremely easy and readable. <br />
+To watch this typescript with autocomplete and linter-hints, clone this project, run `npm install` and open it in vscode.
 
 ## Disclaimer
 

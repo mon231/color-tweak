@@ -1,0 +1,19 @@
+{
+  "name": "color-tweak",
+  "version": "2.0.0",
+  "description": "Patch of ColorSwitch game using frida and apkmod, for educational purposes only",
+  "private": true,
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "frida-compile index.ts -o patch.frida -c",
+    "patch": "npm run build && apkmod -a original.apk -o patch.apk -s patch.frida"
+  },
+  "devDependencies": {
+    "@types/frida-gum": "^18.5.1",
+    "@types/node": "^18.19.3",
+    "frida-compile": "^16.4.1",
+    "frida-il2cpp-bridge": "^0.9.0"
+  }
+}
